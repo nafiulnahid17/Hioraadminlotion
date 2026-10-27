@@ -35,7 +35,7 @@ Or host the directory with any static server. Until Supabase keys are entered, t
 
 ## Deploy to Cloudflare Pages
 
-1. Create a **new** GitHub repository named `hiora-admin` (separate from `Hioralotionlanding`), then push this folder.
+1. Use the existing [Hioraadminlotion repository](https://github.com/nafiulnahid17/Hioraadminlotion), which is separate from `Hioralotionlanding`. The admin source is already pushed.
 2. Cloudflare Dashboard → Workers & Pages → Create → Pages → Connect to Git.
 3. Choose `Hioraadminlotion`; set **Framework preset: None**, **Build command: blank**, **Build output directory: `.`**, then deploy.
 4. After Supabase is ready, edit `config.js` and redeploy. Only enter `SUPABASE_URL` and `SUPABASE_ANON_KEY` (the public anon/publishable key). Do **not** put a `service_role` key in any public asset.
@@ -82,18 +82,15 @@ The existing public app has its own checkout form for APLB lotion orders (offer 
 
 **No public landing-page order synchronization is enabled yet.** Doing so requires configuring a database project and a secure intake endpoint.
 
-## Git push after creating repo
+## Git repository already connected
 
 ```bash
-git init
-git add .
-git commit -m "feat: standalone Hiora Studio admin dashboard"
-git branch -M main
-git remote add origin https://github.com/nafiulnahid17/Hioraadminlotion.git
-git push -u origin main
+git clone https://github.com/nafiulnahid17/Hioraadminlotion.git
+cd Hioraadminlotion
+npm run dev
 ```
 
-Replace remote URL if you choose a different repository name. Do not push `config.js` with secrets; public Supabase anon keys are meant to be exposed, but service keys are not.
+The repository is already populated. Do not commit service-role keys or other secrets; public Supabase anon keys are meant to be exposed, but service keys are not.
 
 ## Database model
 
