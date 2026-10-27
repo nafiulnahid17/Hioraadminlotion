@@ -24,7 +24,7 @@ A premium, responsive, dependency-free admin SPA built for **Hiora** customer ca
 
 ## Run locally
 
-Node.js 20+ is sufficient. There are **no external dependencies**.
+Node.js 22 is pinned via `.node-version` for Cloudflare Pages. There are **no external dependencies**.
 
 ```bash
 npm run dev
@@ -37,11 +37,11 @@ Or host the directory with any static server. Until Supabase keys are entered, t
 
 1. Use the existing [Hioraadminlotion repository](https://github.com/nafiulnahid17/Hioraadminlotion), which is separate from `Hioralotionlanding`. The admin source is already pushed.
 2. Cloudflare Dashboard → Workers & Pages → Create → Pages → Connect to Git.
-3. Choose `Hioraadminlotion`; set **Framework preset: None**, **Build command: blank**, **Build output directory: `.`**, then deploy.
+3. Choose `Hioraadminlotion`; set **Framework preset: None**, **Build command: `npm run build`**, **Build output directory: `dist`**, and **Root directory: `/`**. Under Cloudflare Pages environment variables, set **`SKIP_DEPENDENCY_INSTALL=1`** (safe because this project has no external packages), then deploy.
 4. After Supabase is ready, edit `config.js` and redeploy. Only enter `SUPABASE_URL` and `SUPABASE_ANON_KEY` (the public anon/publishable key). Do **not** put a `service_role` key in any public asset.
 5. Use a separate subdomain such as `admin.your-domain.com`; keep the public order page at its own deployment.
 
-Cloudflare Pages serves `_headers` to add CSP, frame protection, Referrer Policy, etc. The app's SPA rewrite is in `_redirects`.
+Cloudflare Pages serves `_headers` to add CSP, frame protection, Referrer Policy, etc. The app's SPA rewrite is in `_redirects`. Only a whitelist of static files is copied to `dist`, keeping SQL and tests off the public site. See [Cloudflare deployment and troubleshooting](CLOUDFLARE_DEPLOY.md).
 
 ## Set up Supabase for real orders
 
