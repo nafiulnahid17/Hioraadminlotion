@@ -1,0 +1,44 @@
+name: Verify Hiora Admin Cloudflare Pages
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out sources
+        uses: actions/checkout@v4
+      - name: Use pinned Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+      - name: Install dependencies from lockfile (zero external packages)
+        run: npm ci --offline --no-audit --no-fund
+      - name: Syntax checks
+        run: npm run check
+      - name: Admin CRUD smoke tests
+        run: npm test
+      - name: Build Pages output
+        run: npm run build
+      - name: Check published files and avoid leaking server data
+        run: |
+          test -f dist/index.html
+          test -f dist/config.js
+          test -f dist/_headers
+          test -f dist/_redirects
+          test -f dist/assets/app.js
+          test -f dist/assets/supabase.js
+          test -f dist/assets/styles.css
+          test ! -e dist/supabase
+          test ! -e dist/scripts
+          test ! -e dist/tests
+          test ! -e dist/package.json
