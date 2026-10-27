@@ -1,0 +1,16 @@
+{
+  "name": "hiora-studio-admin",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Standalone Cloudflare Pages admin app for Hiora customer care and orders",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "start": "node scripts/dev.mjs",
+    "check": "node --check assets/app.js && node --check assets/supabase.js && node --check assets/demo.js && node --check scripts/dev.mjs",
+    "test": "node tests/smoke.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
